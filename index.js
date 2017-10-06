@@ -50,11 +50,11 @@ class MergeJsonWebpackPlugin {
         this.processFiles = (compilation, files, outputPath) => {
             this.fileDependencies = this.fileDependencies.concat(files);
             var fileContents = files.map(this.readFile);
-            let mergedContents = {};
+            let mergedContents = [];
             return es6_promise_1.Promise.all(fileContents)
                 .then((contents) => {
                 contents.forEach((content) => {
-                    mergedContents = this.mergeDeep(mergedContents, content);
+                    mergedContents.push(content)
                 });
                 mergedContents = JSON.stringify(mergedContents);
                 compilation.assets[outputPath] = {
